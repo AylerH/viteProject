@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/generate-md-index.js",
     "dev": "vite",
     "prebuild": "node scripts/generate-md-index.js",
     "build": "tsc -b && vite build",

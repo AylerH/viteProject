@@ -1,54 +1,51 @@
-# React + TypeScript + Vite
+# 项目介绍
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+这个项目是一个使用Vite、React和TypeScript构建的Markdown文件查看器。
 
-Currently, two official plugins are available:
+## 主要功能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 以标签卡形式展示多个Markdown文件
+- 支持Markdown语法高亮显示
+- 支持切换不同的文档
 
-## Expanding the ESLint configuration
+## 技术栈
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Vite: 快速的前端构建工具
+- React: 用于构建用户界面的JavaScript库
+- TypeScript: JavaScript的类型超集
+- Ant Design: 企业级UI设计语言和React组件库
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 使用方法
+
+将Markdown文件放入`public/md_files`目录中，应用将自动加载并显示它们。 
+
+## 环境启动方法
+
+### 开发环境
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
 ```
+开发服务器默认运行在 http://localhost:5173
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 生产环境
+```bash
+# 构建生产版本
+npm run build
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# 预览生产构建
+npm run preview
+```
+生产构建文件将生成在 `dist` 目录中，可以使用任何静态文件服务器部署。
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 测试环境
+```bash
+# 运行单元测试
+npm run test
+
+# 运行端到端测试
+npm run test:e2e
 ```

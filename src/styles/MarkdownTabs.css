@@ -1,0 +1,42 @@
+.markdown-tabs {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: left;
+}
+
+.tabs-container {
+  background-color: #f5f7fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #888;
+}
+
+.no-files {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #888;
+  background-color: #f5f7fa;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 500px;
+}
+
+/* 确保Ant Design的Tabs组件内容左对齐 */
+.ant-tabs-content {
+  text-align: left;
+}
+
+.ant-tabs-tabpane {
+  text-align: left;
+} 

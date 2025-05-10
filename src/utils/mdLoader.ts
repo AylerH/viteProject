@@ -5,6 +5,11 @@ interface MdFile {
   content: string;
 }
 
+interface MdFileIndex {
+  name: string;
+  path: string;
+}
+
 export const useMdFiles = (): { loading: boolean; files: MdFile[] } => {
   const [files, setFiles] = useState<MdFile[]>([]);
   const [loading, setLoading] = useState(true);
@@ -42,39 +47,32 @@ export const useMdFiles = (): { loading: boolean; files: MdFile[] } => {
           setFiles(loadedFiles);
         } else {
           // 生产环境：使用fetch获取文件列表和内容
-          // 首先尝试获取README.md
-          try {
-            const readmeResponse = await fetch('/md_files/README.md');
-            if (readmeResponse.ok) {
-              const readmeContent = await readmeResponse.text();
-              setFiles(files => [...files, { name: 'README', content: readmeContent }]);
-            }
-          } catch (error) {
-            console.error('Failed to load README.md:', error);
+          // 首先获取索引文件
+          const indexResponse = await fetch('/md_files/index.json');
+          if (!indexResponse.ok) {
+            throw new Error('Failed to load Markdown index file');
           }
-
-          // 然后获取其他已知文件
-          const knownFiles = ['介绍', 'show'];
-          for (const fileName of knownFiles) {
+          
+          const fileIndex: MdFileIndex[] = await indexResponse.json();
+          const loadedFiles: MdFile[] = [];
+          
+          // 依次加载每个文件
+          for (const file of fileIndex) {
             try {
-              const response = await fetch(`/md_files/${fileName}.md`);
+              const response = await fetch(`/md_files/${file.path}`);
               if (response.ok) {
                 const content = await response.text();
-                setFiles(files => [...files, { name: fileName, content }]);
+                loadedFiles.push({
+                  name: file.name,
+                  content
+                });
               }
             } catch (error) {
-              console.error(`Failed to load ${fileName}.md:`, error);
+              console.error(`Failed to load ${file.path}:`, error);
             }
           }
-
-          // 按文件名排序（README已经在前面添加了）
-          setFiles(files => 
-            files.sort((a, b) => {
-              if (a.name === 'README') return -1;
-              if (b.name === 'README') return 1;
-              return a.name.localeCompare(b.name);
-            })
-          );
+          
+          setFiles(loadedFiles);
         }
       } catch (error) {
         console.error('Failed to load markdown files:', error);

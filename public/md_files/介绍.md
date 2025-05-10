@@ -1,6 +1,11 @@
 # 项目介绍
 
 这个项目是一个使用Vite、React和TypeScript构建的Markdown文件查看器。
+| 名称 | 描述 |
+|------|------|
+| Vite | 前端构建工具 |
+| React | 前端框架 |
+| TypeScript | JavaScript的超集 
 
 ## 主要功能
 

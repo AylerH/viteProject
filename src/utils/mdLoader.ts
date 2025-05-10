@@ -13,32 +13,69 @@ export const useMdFiles = (): { loading: boolean; files: MdFile[] } => {
     const loadMdFiles = async () => {
       setLoading(true);
       try {
-        // 获取md_files目录下所有的md文件
-        const response = await fetch('/md_files/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch directory listing');
-        }
+        // 开发环境使用import.meta.glob，生产环境使用fetch
+        if (import.meta.env.DEV) {
+          // 开发环境
+          const mdModules = import.meta.glob('/md_files/*.md', { 
+            query: '?raw',
+            import: 'default',
+            eager: true 
+          });
 
-        // 手动指定要加载的md文件
-        const fileNames = ['show.md', '介绍.md'];
-        
-        const mdFilesPromises = fileNames.map(async (fileName) => {
-          const fileResponse = await fetch(`/md_files/${fileName}`);
-          if (!fileResponse.ok) {
-            console.error(`Failed to load file: ${fileName}`);
-            return null;
+          // 将导入的文件转换为MdFile数组
+          const loadedFiles = Object.entries(mdModules).map(([path, content]) => {
+            // 从路径中提取文件名（去掉路径和扩展名）
+            const name = path.split('/').pop()?.replace('.md', '') || '';
+            return {
+              name,
+              content: content as string
+            };
+          });
+
+          // 自定义排序：README放在最前面，其他按字母顺序排序
+          loadedFiles.sort((a, b) => {
+            if (a.name === 'README') return -1;
+            if (b.name === 'README') return 1;
+            return a.name.localeCompare(b.name);
+          });
+          
+          setFiles(loadedFiles);
+        } else {
+          // 生产环境：使用fetch获取文件列表和内容
+          // 首先尝试获取README.md
+          try {
+            const readmeResponse = await fetch('/md_files/README.md');
+            if (readmeResponse.ok) {
+              const readmeContent = await readmeResponse.text();
+              setFiles(files => [...files, { name: 'README', content: readmeContent }]);
+            }
+          } catch (error) {
+            console.error('Failed to load README.md:', error);
           }
-          const content = await fileResponse.text();
-          // 从文件名中提取名称（去掉.md扩展名）
-          const name = fileName.replace('.md', '');
-          return { name, content };
-        });
 
-        const loadedFiles = (await Promise.all(mdFilesPromises)).filter(
-          (file): file is MdFile => file !== null
-        );
-        
-        setFiles(loadedFiles);
+          // 然后获取其他已知文件
+          const knownFiles = ['介绍', 'show'];
+          for (const fileName of knownFiles) {
+            try {
+              const response = await fetch(`/md_files/${fileName}.md`);
+              if (response.ok) {
+                const content = await response.text();
+                setFiles(files => [...files, { name: fileName, content }]);
+              }
+            } catch (error) {
+              console.error(`Failed to load ${fileName}.md:`, error);
+            }
+          }
+
+          // 按文件名排序（README已经在前面添加了）
+          setFiles(files => 
+            files.sort((a, b) => {
+              if (a.name === 'README') return -1;
+              if (b.name === 'README') return 1;
+              return a.name.localeCompare(b.name);
+            })
+          );
+        }
       } catch (error) {
         console.error('Failed to load markdown files:', error);
       } finally {

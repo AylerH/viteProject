@@ -49,3 +49,6 @@ npm run test
 # 运行端到端测试
 npm run test:e2e
 ```
+
+# 本项目实战-10秒部署一个正式个人博客网站
+[详情见：](https://github.com/AylerH/viteProject/tree/master/public/md_files/笔记-10秒部署一个正式个人博客网站.md)

@@ -1,16 +1,4 @@
 # aylerh
-## 开源项目推荐
-### 开源项目推荐与笔记汇总
-[开源项目推荐与笔记汇总](https://gitee.com/aylerh/awesome-projects-notes)  
-
-![开源项目推荐-概览](
-https://raw.githubusercontent.com/AylerH/ImagehostingOnlineUrl/master/image_files/20250517153329362.png)
-
-![软件使用笔记-概览](https://raw.githubusercontent.com/AylerH/ImagehostingOnlineUrl/master/image_files/20250517153442949.png) 
-
-### python后端项目
-[openai兼容的大模型调用-图像信息的精确识别-后端实现](https://gitee.com/aylerh/openai-proxy-project)  
-
 ## 作者信息
 本科机械，研究生软件工程，工程师，一级造价工程师；  
 
@@ -31,6 +19,20 @@ https://raw.githubusercontent.com/AylerH/ImagehostingOnlineUrl/master/image_file
 
 乐盟主-抖音号:117818144  
 
+## 开源项目推荐(强推)
+### 开源项目推荐与笔记汇总（包含超多开源项目以及实际使用经验）
+[开源项目推荐与笔记汇总](https://gitee.com/aylerh/awesome-projects-notes)  
 
-## github项目
+![开源项目推荐-概览](
+https://raw.githubusercontent.com/AylerH/ImagehostingOnlineUrl/master/image_files/20250517153329362.png)
+
+![软件使用笔记-概览](https://raw.githubusercontent.com/AylerH/ImagehostingOnlineUrl/master/image_files/20250517153442949.png) 
+
+
+## 我的gitee项目
+### python后端项目
+[openai兼容的大模型调用-图像信息的精确识别-后端实现](https://gitee.com/aylerh/openai-proxy-project)  
+
+## 我的github项目
+
 
